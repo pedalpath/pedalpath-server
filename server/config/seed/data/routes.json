@@ -1,0 +1,8 @@
+{
+	"route_1": {
+		"name": "route_1",
+		"waypoints": [{
+			"location": "loc_1"
+		}]
+	}
+}
