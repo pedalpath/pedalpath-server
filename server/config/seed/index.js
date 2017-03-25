@@ -1,8 +1,8 @@
-import Location from '../../api/location/location.model';
-import Route from '../../api/route/route.model';
+import Location from '../../api/location/location.model'
+import Route from '../../api/route/route.model'
 
-import locations from './data/locations.json';
-import routes from './data/routes.json';
+import locations from './data/locations.json'
+import routes from './data/routes.json'
 
 /**
 	* generateCreator
@@ -11,12 +11,12 @@ import routes from './data/routes.json';
 	*/
 let generateCreator = (Model,formatter) => {
 	let creator = async (doc) => {
-		if (formatter) formatter(doc);
-		doc = new Model(doc);
-		await doc.save();
-		return doc;
+		if (formatter) formatter(doc)
+		doc = new Model(doc)
+		await doc.save()
+		return doc
 	}
-	return creator;
+	return creator
 }
 
 /**
@@ -26,10 +26,10 @@ let generateCreator = (Model,formatter) => {
 	*/
 let createDocuments = async (documents,creator) => {
   let promises = Object.keys(documents).map(async (key) => {
-    documents[key] = await creator(documents[key]);
-  });
-  await Promise.all(promises);
-};
+    documents[key] = await creator(documents[key])
+  })
+  await Promise.all(promises)
+}
 
 /**
 	* removeCollections
@@ -38,15 +38,15 @@ let createDocuments = async (documents,creator) => {
 let removeCollections = async (Models) => {
 	let promises = Models.map(
 		async (Model) => Model.remove({}).exec()
-	);
-	await Promise.all(promises);
+	)
+	await Promise.all(promises)
 }
 
 /**
 	* createPoint
 	* Create a point from coordinates
 	*/
-let createPoint = (coordinates) => ({ type: 'Point', coordinates: coordinates });
+let createPoint = (coordinates) => ({ type: 'Point', coordinates: coordinates })
 
 /**
 	* seed
@@ -55,21 +55,22 @@ let createPoint = (coordinates) => ({ type: 'Point', coordinates: coordinates })
 let seed = async () => {
 
 	// Remove all data
-	await removeCollections([Location,Route]);
+	await removeCollections([Location,Route])
 
 	// Create locations
-	await createDocuments(locations,generateCreator(Location,locationFormatter));
+	await createDocuments(locations,generateCreator(Location,locationFormatter))
 	function locationFormatter(location){
-		location.point = createPoint(location.point);
+		location.point = createPoint(location.point)
 	}
 
 	// Create routes
-	await createDocuments(routes,generateCreator(Route,routeFormatter));
+	await createDocuments(routes,generateCreator(Route,routeFormatter))
 	function routeFormatter(route){
-		route.locations = route.locations.map((location) => locations[location]);
+		console.log(route.waypoints)
+		route.locations = route.waypoints.map((location) => locations[location])
 	}
 
 }
 
 // Export seed script
-module.exports = seed;
+module.exports = seed
