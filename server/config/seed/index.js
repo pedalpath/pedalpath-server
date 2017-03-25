@@ -66,8 +66,7 @@ let seed = async () => {
 	// Create routes
 	await createDocuments(routes,generateCreator(Route,routeFormatter))
 	function routeFormatter(route){
-		console.log(route.waypoints)
-		route.locations = route.waypoints.map((location) => locations[location])
+		route.locations = route.locations.map((location) => locations[location])
 	}
 
 }
