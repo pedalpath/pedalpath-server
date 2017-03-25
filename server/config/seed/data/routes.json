@@ -1,6 +1,7 @@
 {
 	"route_1": {
 		"name": "route_1",
+		"request": "request_1",
 		"locations": [{
 			"location": "loc_1"
 		}]

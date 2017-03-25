@@ -1,8 +1,10 @@
 import Location from '../../api/location/location.model'
 import Route from '../../api/route/route.model'
+import Request from '../../api/request/request.model'
 
 import locations from './data/locations.json'
 import routes from './data/routes.json'
+import requests from './data/requests.json'
 
 /**
 	* generateCreator
@@ -55,18 +57,26 @@ let createPoint = (coordinates) => ({ type: 'Point', coordinates: coordinates })
 let seed = async () => {
 
 	// Remove all data
-	await removeCollections([Location,Route])
+	await removeCollections([Location,Route,Request])
 
 	// Create locations
 	await createDocuments(locations,generateCreator(Location,locationFormatter))
 	function locationFormatter(location){
 		location.point = createPoint(location.point)
 	}
-
+	
+	// Create requests
+	await createDocuments(requests,generateCreator(Request,requestFormatter))
+	function requestFormatter(request){
+		request.from = createPoint(requests.request_1.from)
+		request.to = createPoint(requests.request_1.to)
+	}
+	
 	// Create routes
 	await createDocuments(routes,generateCreator(Route,routeFormatter))
 	function routeFormatter(route){
-		route.locations = route.locations.map((location) => locations[location])
+		route.locations = route.locations.map((location) => locations[location.location])
+		route.request = requests.request_1
 	}
 
 }

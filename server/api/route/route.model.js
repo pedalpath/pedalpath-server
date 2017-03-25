@@ -10,6 +10,10 @@ class RouteModel extends Model {
 }
 
 RouteModel.schema = {
+	request: { 
+		ref: 'Request',
+		type: Mongo.ObjectId
+	},
 	locations: [{
 		ref: 'Location',
 		type: Mongo.ObjectId

@@ -28,6 +28,7 @@ export default function(app) {
 
   app.use('/routes', createRoute('route'));
   app.use('/locations', createRoute('location'));
+  app.use('/requests', createRoute('request'));
   app.get('/',(req,res) => res.send('Hello World'));
 
 }

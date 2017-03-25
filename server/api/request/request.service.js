@@ -1,6 +1,6 @@
 import Service from '../../utilities/service'
 
-class RouteService extends Service {
+class RequestService extends Service {
 
   /*
   * Access a list of objects
@@ -9,8 +9,8 @@ class RouteService extends Service {
   */
   async index(query) {
     query = query || {}
-    let routes = await this.Model.find(query).populate(['locations','request']).exec()
-    return routes
+    let requests = await this.Model.find(query).exec()
+    return requests
   }
 
   /*
@@ -19,10 +19,10 @@ class RouteService extends Service {
   * @return {Object} object
   */
   async show(id) {
-    let route = await this.Model.findById(id).populate(['locations','request']).exec()
+    let request = await this.Model.findById(id).exec()
     return route
   }
 
 }
 
-module.exports = RouteService
+module.exports = RequestService

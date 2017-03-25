@@ -1,4 +1,4 @@
-import Route from './route.model';
+import Route from './route.model'
 
 describe('RouteModel',() => {
 
@@ -7,10 +7,10 @@ describe('RouteModel',() => {
 		it('should have a greeting',() => {			
 			let route = new Route({
 				name: 'Route'
-			});
+			})
 			expect(route.greeting).to.equal('This route is called Route')
-		});
+		})
 
-	});
+	})
 
-});
+})
